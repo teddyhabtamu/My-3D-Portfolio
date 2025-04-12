@@ -2,6 +2,36 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx}"],
   mode: "jit",
+  safelist: [
+    "text-white",
+    "text-secondary",
+    "bg-tertiary",
+    "rounded-2xl",
+    "w-full",
+    "h-full",
+    "object-cover",
+    "text-[14px]",
+    "text-[24px]",
+    "flex",
+    "flex-wrap",
+    "gap-2",
+    "justify-center",
+    "items-center",
+    "cursor-pointer",
+    "w-10",
+    "h-10",
+    "black-gradient",
+    "absolute",
+    "inset-0",
+    "m-3",
+    "card-img_hover",
+    // Add your tag colors if they're dynamic
+    "text-blue-500",
+    "text-green-500",
+    "text-pink-500",
+    "text-yellow-500",
+    "text-purple-500",
+  ],
   theme: {
     extend: {
       colors: {
