@@ -29,7 +29,7 @@ const ProjectCard = ({
       >
         <div
           onClick={() => window.open(live_code, "_blank")}
-          className="relative w-full h-[230px] cursor-pointer"
+          className="bg-tertiary p-5 rounded-2xl w-full sm:max-w-[360px]"
         >
           <img
             src={image}
@@ -92,7 +92,7 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className="mt-20 flex flex-wrap gap-7">
+      <div className="mt-20 flex flex-wrap gap-7 justify-center items-start">
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}
