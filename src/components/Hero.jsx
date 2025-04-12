@@ -46,7 +46,7 @@ const Hero = () => {
       {isDesktop ? (
         <ComputersCanvas />
       ) : (
-        <div className="absolute xs:bottom-10 bottom-48 left-4 flex justify-center items-center">
+        <div className="absolute xs:bottom-10 bottom-32 left-4 flex justify-center items-center">
           <img
             src="/computer.png"
             alt="3D Computer Static"
