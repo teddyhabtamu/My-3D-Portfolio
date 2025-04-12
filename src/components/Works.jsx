@@ -25,11 +25,11 @@ const ProjectCard = ({
           scale: 1,
           speed: 450,
         }}
-        className="bg-tertiary p-5 rounded-2xl w-full sm:w-[360px] max-w-[360px]"
+        className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full relative"
       >
         <div
           onClick={() => window.open(live_code, "_blank")}
-          className="relative w-full h-[230px] cursor-pointer"
+          className="relative w-full h-[230px] overflow-hidden rounded-2xl cursor-pointer"
         >
           <img
             src={image}
@@ -37,10 +37,11 @@ const ProjectCard = ({
             className="w-full h-full object-cover rounded-2xl"
           />
 
-          <div className="absolute inset-0 flex justify-end m-3 card-img_hover">
+          {/* GitHub icon in corner */}
+          <div className="absolute inset-0 flex justify-end items-start p-3">
             <div
               onClick={(e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // prevent triggering parent link
                 window.open(source_code_link, "_blank");
               }}
               className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
