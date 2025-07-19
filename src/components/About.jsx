@@ -32,7 +32,7 @@ const ServiceCard = ({ index, title, icon }) => {
   return (
     <div className='xs:w-[250px] w-full'>
       <motion.div
-        variants={!isMobile ? cardVariants : {}}
+        variants={!isMobile ? cardVariants : { hidden: { opacity: 1 }, show: { opacity: 1 } }}
         initial="hidden"
         animate="show"
         className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
@@ -78,13 +78,19 @@ const About = () => {
 
   return (
     <>
-      <motion.div variants={!isMobile ? textVariant() : {}}>
+      <motion.div 
+        variants={!isMobile ? textVariant() : { hidden: { opacity: 1 }, show: { opacity: 1 } }}
+        initial="hidden"
+        animate="show"
+      >
         <p className={styles.sectionSubText}>Introduction</p>
         <h2 className={styles.sectionHeadText}>About Me.</h2>
       </motion.div>
 
       <motion.p
-        variants={!isMobile ? fadeIn("", "", 0.1, 1) : {}}
+        variants={!isMobile ? fadeIn("", "", 0.1, 1) : { hidden: { opacity: 1 }, show: { opacity: 1 } }}
+        initial="hidden"
+        animate="show"
         className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
       >
         I'm a frontend developer who loves building clean and easy-to-use

@@ -76,9 +76,19 @@ const Experience = () => {
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
+  // Safe animation variants with proper fallbacks
+  const headerVariants = !isMobile ? textVariant() : { 
+    hidden: { opacity: 1 }, 
+    show: { opacity: 1 } 
+  };
+
   return (
     <>
-      <motion.div variants={!isMobile ? textVariant() : {}}>
+      <motion.div 
+        variants={headerVariants}
+        initial="hidden"
+        animate="show"
+      >
         <p className={`${styles.sectionSubText} text-center`}>
           What I have done so far
         </p>
