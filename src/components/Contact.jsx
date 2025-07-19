@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
@@ -14,8 +14,17 @@ const Contact = () => {
     email: "",
     message: "",
   });
-
   const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
 
   const handleChange = (e) => {
     const { target } = e;
@@ -69,7 +78,7 @@ const Contact = () => {
       className={`xl:mt-12 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden`}
     >
       <motion.div
-        variants={slideIn("left", "tween", 0.2, 1)}
+        variants={!isMobile ? slideIn("left", "tween", 0.2, 1) : {}}
         className='flex-[0.75] bg-black-100 p-8 rounded-2xl'
       >
         <p className={styles.sectionSubText}>Get in touch</p>
@@ -116,7 +125,7 @@ const Contact = () => {
 
           <button
             type='submit'
-            className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary'
+            className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary hover:bg-secondary transition-colors duration-200'
           >
             {loading ? "Sending..." : "Send"}
           </button>
@@ -124,7 +133,7 @@ const Contact = () => {
       </motion.div>
 
       <motion.div
-        variants={slideIn("right", "tween", 0.2, 1)}
+        variants={!isMobile ? slideIn("right", "tween", 0.2, 1) : {}}
         className='xl:flex-1 xl:h-auto md:h-[550px] h-[350px]'
       >
         <EarthCanvas />

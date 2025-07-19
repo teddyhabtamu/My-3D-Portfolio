@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
@@ -13,9 +13,10 @@ const FeedbackCard = ({
   designation,
   company,
   image,
+  isMobile
 }) => (
   <motion.div
-    variants={fadeIn("", "spring", index * 0.5, 0.75)}
+    variants={!isMobile ? fadeIn("", "spring", index * 0.5, 0.75) : {}}
     className='bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full'
   >
     <p className='text-white font-black text-[48px]'>"</p>
@@ -37,6 +38,7 @@ const FeedbackCard = ({
           src={image}
           alt={`feedback_by-${name}`}
           className='w-10 h-10 rounded-full object-cover'
+          loading="lazy"
         />
       </div>
     </div>
@@ -44,19 +46,35 @@ const FeedbackCard = ({
 );
 
 const Feedbacks = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
+
   return (
     <div className={`mt-12 bg-black-100 rounded-[20px]`}>
       <div
         className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}
       >
-        <motion.div variants={textVariant()}>
+        <motion.div variants={!isMobile ? textVariant() : {}}>
           <p className={styles.sectionSubText}>What others say</p>
           <h2 className={styles.sectionHeadText}>Testimonials.</h2>
         </motion.div>
       </div>
       <div className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7`}>
         {testimonials.map((testimonial, index) => (
-          <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
+          <FeedbackCard 
+            key={testimonial.name} 
+            index={index} 
+            isMobile={isMobile}
+            {...testimonial} 
+          />
         ))}
       </div>
     </div>

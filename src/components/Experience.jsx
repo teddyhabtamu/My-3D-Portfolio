@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -12,12 +12,17 @@ import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 
-const ExperienceCard = ({ experience }) => {
+const ExperienceCard = ({ experience, isMobile }) => {
   return (
     <VerticalTimelineElement
       contentStyle={{
         background: "#1d1836",
         color: "#fff",
+        // Disable animations on mobile for better performance
+        ...(isMobile && {
+          animation: 'none',
+          transform: 'none'
+        })
       }}
       contentArrowStyle={{ borderRight: "7px solid  #232631" }}
       date={experience.date}
@@ -28,9 +33,12 @@ const ExperienceCard = ({ experience }) => {
             src={experience.icon}
             alt={experience.company_name}
             className='w-[60%] h-[60%] object-contain'
+            loading="lazy"
           />
         </div>
       }
+      // Disable animations on mobile
+      animate={!isMobile}
     >
       <div>
         <h3 className='text-white text-[24px] font-bold'>{experience.title}</h3>
@@ -57,9 +65,20 @@ const ExperienceCard = ({ experience }) => {
 };
 
 const Experience = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
+
   return (
     <>
-      <motion.div variants={textVariant()}>
+      <motion.div variants={!isMobile ? textVariant() : {}}>
         <p className={`${styles.sectionSubText} text-center`}>
           What I have done so far
         </p>
@@ -69,11 +88,12 @@ const Experience = () => {
       </motion.div>
 
       <div className='mt-20 flex flex-col'>
-        <VerticalTimeline>
+        <VerticalTimeline animate={!isMobile}>
           {experiences.map((experience, index) => (
             <ExperienceCard
               key={`experience-${index}`}
               experience={experience}
+              isMobile={isMobile}
             />
           ))}
         </VerticalTimeline>

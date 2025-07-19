@@ -19,19 +19,36 @@ const Hero = () => {
 
   return (
     <section className={`relative w-full h-screen mx-auto`}>
+      {/* 3D Canvas - rendered first with lower z-index */}
+      {isDesktop ? (
+        <div className="absolute inset-0 z-0">
+          <ComputersCanvas />
+        </div>
+      ) : (
+        <div className="absolute xs:bottom-10 bottom-32 left-4 flex justify-center items-center z-0">
+          <img
+            src="/computer.png"
+            alt="3D Computer Static"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      )}
+
+      {/* Text content - rendered with higher z-index */}
       <div
-        className={`absolute inset-0 top-[120px] max-w-7xl mx-auto ${styles.paddingX} flex flex-row items-start gap-5`}
+        className={`absolute inset-0 top-[120px] max-w-7xl mx-auto ${styles.paddingX} flex flex-row items-start gap-5 z-10`}
       >
         <div className="flex flex-col justify-center items-center mt-5">
           <div className="w-5 h-5 rounded-full bg-[#915EFF]" />
           <div className="w-1 sm:h-80 h-40 violet-gradient" />
         </div>
 
-        <div>
-          <h1 className={`${styles.heroHeadText} text-white`}>
+        <div className="z-10">
+          <h1 className={`${styles.heroHeadText} text-white drop-shadow-lg`}>
             Hi, I'm <span className="text-[#915EFF]">Tewodros Habtamu</span>
           </h1>
-          <p className={`${styles.heroSubText} mt-2 text-white-100`}>
+          <p className={`${styles.heroSubText} mt-2 text-white-100 drop-shadow-md`}>
             And I'm a Web Developer and Data Scientist{" "}
             <br className="sm:block hidden" />
             My expertise lies in transforming design concepts into interactive
@@ -42,20 +59,8 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Conditional Render */}
-      {isDesktop ? (
-        <ComputersCanvas />
-      ) : (
-        <div className="absolute xs:bottom-10 bottom-32 left-4 flex justify-center items-center">
-          <img
-            src="/computer.png"
-            alt="3D Computer Static"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
-
-      <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">
+      {/* Scroll indicator - high z-index */}
+      <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center z-20">
         <a href="#about">
           <div className="w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
             <motion.div
